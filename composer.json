@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "psr-4": {
+            "ExcelCompare\\": "src/"
+        }
+    },
     "config": {
         "platform": {
             "php": "7.0.33"
@@ -14,7 +19,8 @@
         "phpoffice/phpspreadsheet": "^1.8",
         "box/spout": "^2.7",
         "imtigger/oneexcel": "^0.7.3",
-        "macellan/phpexcel": "^1.8"
+        "macellan/phpexcel": "^1.8",
+        "monolog/monolog": "^1.27"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7.1",
