@@ -1,5 +1,23 @@
 {
+    "config": {
+        "platform": {
+            "php": "7.0.33"
+        }
+    },
+    "require": {
+        "shuchkin/simplexlsxgen": "^1.2.16",
+        "scoumbourdis/phpexcel": "^1.9.6",
+        "nimmneun/onesheet": "^1.2.3",
+        "ellumilel/php-excel-writer": "^v0.1.9",
+        "fakerphp/faker": "^1.9",
+        "symfony/console": "^3.4",
+        "phpoffice/phpspreadsheet": "^1.8",
+        "box/spout": "^2.7",
+        "imtigger/oneexcel": "^0.7.3",
+        "macellan/phpexcel": "^1.8"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^9"
+        "squizlabs/php_codesniffer": "^3.7.1",
+        "phpunit/phpunit": "^6.5"
     }
 }
