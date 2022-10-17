@@ -1,8 +1,9 @@
 <?php
 namespace ExcelCompare\Command;
 
-use \ExcelCompare\Generators\SimpleXlsxGenerator;
-use \ExcelCompare\Generators\OneSheetGenerator;
+use ExcelCompare\Generators\SimpleXlsxGenerator;
+use ExcelCompare\Generators\OneSheetGenerator;
+use ExcelCompare\Generators\EllumilelPhpExcelWriterGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,6 +18,7 @@ class ExcelRun extends Command
         $this->setName('excel:run')
             ->addOption('simplexlsgen', 's', InputOption::VALUE_NONE, 'Generate by Shuchkin\SimpleXLSXGen')
             ->addOption('onesheet', 'o', InputOption::VALUE_NONE, 'Generate by nimmneun\OneSheet')
+            ->addOption('ellumilelphpexcelwriter', 'e', InputOption::VALUE_NONE, 'Generate by ellumilel/php-excel-writer')
             ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count');
         parent::configure();
     }
@@ -33,6 +35,9 @@ class ExcelRun extends Command
         if ($input->getOption("onesheet")) {
             $this->runOneSheet();
         }
+        if ($input->getOption("ellumilelphpexcelwriter")) {
+            $this->runEllumilelPhpExcelWriter();
+        }
     }
 
     protected function runSimpleXlsGen()
@@ -47,5 +52,12 @@ class ExcelRun extends Command
         $generator = new OneSheetGenerator();
         $generator->generate($this->rowsCount);
         $generator->save('output/OneSheet.xlsx');
+    }
+
+    protected function runEllumilelPhpExcelWriter()
+    {
+        $generator = new EllumilelPhpExcelWriterGenerator();
+        $generator->generate($this->rowsCount);
+        $generator->save('output/EllumilelPhpExcelWriterGenerator.xlsx');
     }
 }
