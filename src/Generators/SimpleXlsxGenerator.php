@@ -4,6 +4,7 @@ namespace ExcelCompare\Generators;
 
 use ExcelCompare\FileGenerator;
 use Shuchkin\SimpleXLSXGen;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SimpleXlsxGenerator extends FileGenerator
 {
@@ -11,53 +12,53 @@ class SimpleXlsxGenerator extends FileGenerator
     private $rows = [];
     private $row = [];
 
-    public function __construct()
+    public function __construct(OutputInterface $output)
     {
-        parent::__construct();
+        parent::__construct($output);
         $this->generator = new SimpleXLSXGen();
         $this->rows = [];
         $this->row = [];
     }
 
-    function save(string $filename)
+    public function save(string $filename)
     {
         $this->generator->addSheet($this->rows, 'SimpleXLSXGen');
         $this->generator->saveAs($filename);
     }
 
-    function addRow(int $count = 1)
+    public function addRow(int $count = 1)
     {
         parent::addRow($count);
         $this->rows[] = $this->row;
         $this->row = [];
     }
 
-    function addString()
+    public function addString()
     {
         $this->row[] = $this->data->getText();
     }
 
-    function addNumber()
+    public function addNumber()
     {
         $this->row[] = $this->data->getNumber();
     }
 
-    function addFloat()
+    public function addFloat()
     {
         $this->row[] = $this->data->getFloat();
     }
 
-    function addDate()
+    public function addDate()
     {
         $this->row[] = $this->data->getDate();
     }
 
-    function addTime()
+    public function addTime()
     {
         $this->row[] = $this->data->getTime();
     }
 
-    function addDateTime()
+    public function addDateTime()
     {
         $this->row[] = $this->data->getDateTime();
     }

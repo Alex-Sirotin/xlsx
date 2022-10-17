@@ -3,26 +3,27 @@
 namespace ExcelCompare\Generators;
 
 use ExcelCompare\FileGenerator;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class OneSheetGenerator extends FileGenerator
 {
     private $generator;
     private $row = [];
 
-    public function __construct()
+    public function __construct(OutputInterface $output)
     {
-        parent::__construct();
+        parent::__construct($output);
         $this->generator = new \OneSheet\Writer();
         $this->generator->enableCellAutosizing();
         $this->row = [];
     }
 
-    function save(string $filename)
+    public function save(string $filename)
     {
         $this->generator->writeToFile($filename);
     }
 
-    function addRow(int $count = 1)
+    public function addRow(int $count = 1)
     {
         parent::addRow($count);
         $style = (new \OneSheet\Style\Style())
@@ -36,32 +37,32 @@ class OneSheetGenerator extends FileGenerator
         $this->row = [];
     }
 
-    function addString()
+    public function addString()
     {
         $this->row[] = $this->data->getText();
     }
 
-    function addNumber()
+    public function addNumber()
     {
         $this->row[] = $this->data->getNumber();
     }
 
-    function addFloat()
+    public function addFloat()
     {
         $this->row[] = $this->data->getFloat();
     }
 
-    function addDate()
+    public function addDate()
     {
         $this->row[] = $this->data->getDate();
     }
 
-    function addTime()
+    public function addTime()
     {
         $this->row[] = $this->data->getTime();
     }
 
-    function addDateTime()
+    public function addDateTime()
     {
         $this->row[] = $this->data->getDateTime();
     }

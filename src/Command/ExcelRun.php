@@ -1,6 +1,7 @@
 <?php
 namespace ExcelCompare\Command;
 
+use ExcelCompare\FileGenerator;
 use ExcelCompare\Generators\SimpleXlsxGenerator;
 use ExcelCompare\Generators\OneSheetGenerator;
 use ExcelCompare\Generators\EllumilelPhpExcelWriterGenerator;
@@ -8,17 +9,32 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Helper\TableSeparator;
 
 class ExcelRun extends Command
 {
     private $rowsCount = 1000;
+    private $times = [];
 
     protected function configure()
     {
         $this->setName('excel:run')
-            ->addOption('simplexlsgen', 's', InputOption::VALUE_NONE, 'Generate by Shuchkin\SimpleXLSXGen')
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Generate all files')
+            ->addOption(
+                'simplexlsgen',
+                's',
+                InputOption::VALUE_NONE,
+                'Generate by Shuchkin\SimpleXLSXGen'
+            )
             ->addOption('onesheet', 'o', InputOption::VALUE_NONE, 'Generate by nimmneun\OneSheet')
-            ->addOption('ellumilelphpexcelwriter', 'e', InputOption::VALUE_NONE, 'Generate by ellumilel/php-excel-writer')
+            ->addOption(
+                'ellumilelphpexcelwriter',
+                'e',
+                InputOption::VALUE_NONE,
+                'Generate by ellumilel/php-excel-writer'
+            )
             ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count');
         parent::configure();
     }
@@ -29,35 +45,59 @@ class ExcelRun extends Command
         if (is_numeric($rows) && $rows > 0) {
             $this->rowsCount = $rows;
         }
-        if ($input->getOption("simplexlsgen")) {
-            $this->runSimpleXlsGen();
+        $all = $input->getOption('all');
+
+        $output->writeln('Generating...');
+        $output->writeln('');
+        if ($input->getOption("simplexlsgen") || $all) {
+            //$this->runSimpleXlsGen($output);
+            $this->runGenerator(new SimpleXlsxGenerator($output), 'output/SimpleXlsxGen.xlsx', $output);
         }
-        if ($input->getOption("onesheet")) {
-            $this->runOneSheet();
+        if ($input->getOption("onesheet") || $all) {
+            //$this->runOneSheet($output);
+            $this->runGenerator(new OneSheetGenerator($output), 'output/OneSheet.xlsx', $output);
         }
-        if ($input->getOption("ellumilelphpexcelwriter")) {
-            $this->runEllumilelPhpExcelWriter();
+        if ($input->getOption("ellumilelphpexcelwriter") || $all) {
+            //$this->runEllumilelPhpExcelWriter($output);
+            $this->runGenerator(
+                new EllumilelPhpExcelWriterGenerator($output),
+                'output/EllumilelPhpExcelWriterGenerator.xlsx',
+                $output
+            );
         }
+        $this->printResult($output);
     }
 
-    protected function runSimpleXlsGen()
+    protected function printResult(OutputInterface $output)
     {
-        $generator = new SimpleXlsxGenerator();
-        $generator->generate($this->rowsCount);
-        $generator->save('output/SimpleXlsxGen.xlsx');
+        $output->writeln('');
+        $output->writeln('Result');
+
+        $table = new Table($output);
+        $header       = ['ID', 'Library', 'Time, ms', 'Rows'];
+        $table->setHeaders($header);
+        $i = 1;
+        foreach ($this->times as $name => $value) {
+            $table->addRow([
+                $i++,
+                $name,
+                $value,
+                $this->rowsCount
+            ]);
+        }
+
+        $table->render();
+        $output->writeln('');
     }
 
-    protected function runOneSheet()
+    protected function runGenerator(FileGenerator $generator, string $filename, OutputInterface $output)
     {
-        $generator = new OneSheetGenerator();
+        $output->writeln($filename);
+        $startTime = microtime(true);
         $generator->generate($this->rowsCount);
-        $generator->save('output/OneSheet.xlsx');
-    }
-
-    protected function runEllumilelPhpExcelWriter()
-    {
-        $generator = new EllumilelPhpExcelWriterGenerator();
-        $generator->generate($this->rowsCount);
-        $generator->save('output/EllumilelPhpExcelWriterGenerator.xlsx');
+        $generator->save($filename);
+        $this->times[$filename] = microtime(true) - $startTime;
+        $output->writeln('');
+        $output->writeln('');
     }
 }
