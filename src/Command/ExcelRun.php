@@ -8,6 +8,7 @@ use ExcelCompare\Generators\PhpSpreadsheetGenerator;
 use ExcelCompare\Generators\EllumilelPhpExcelWriterGenerator;
 use ExcelCompare\Generators\PhpXlsWriterGenerator;
 use ExcelCompare\Generators\PeclXlsWriterGenerator;
+use ExcelCompare\Generators\ScoumbourdisPhpExcelGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,6 +43,7 @@ class ExcelRun extends Command
             ->addOption('xlswriter', 'x', InputOption::VALUE_NONE, 'Generate by mk-j/PHP_XLSXWriter')
             ->addOption('peclxlswriter', 'p', InputOption::VALUE_NONE, 'Generate by Vtiful\Kernel\Excel')
             ->addOption('spreadsheet', 't', InputOption::VALUE_NONE, 'Generate by PHPOffice/PhpSpreadsheet')
+            ->addOption('phpexcel', 'l', InputOption::VALUE_NONE, 'Generate by scoumbourdis/phpexcel')
             ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count')
             ->addOption('cellrepeat', 'c', InputOption::VALUE_REQUIRED, 'Repeat cell');
         parent::configure();
@@ -49,6 +51,7 @@ class ExcelRun extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        error_reporting(0);
         $rows = (int)$input->getOption('rows');
         if (is_numeric($rows) && $rows > 0) {
             $this->rowsCount = $rows;
@@ -60,7 +63,8 @@ class ExcelRun extends Command
         $all = $input->getOption('all');
 
         $output->writeln('Generating...');
-        $output->writeln("Rows: {$this->rowsCount}, Columns: {$this->cellRepeat}");
+        $columns = $this->cellRepeat * 6;
+        $output->writeln("Rows: {$this->rowsCount}, Columns: {$columns}");
         $output->writeln('');
         $this->timestamp = time();
         $this->uniqid = uniqid();
@@ -73,18 +77,21 @@ class ExcelRun extends Command
         if ($input->getOption("ellumilelphpexcelwriter") || $all) {
             $this->runGenerator(
                 new EllumilelPhpExcelWriterGenerator($output),
-                'EllumilelPhpExcelWriterGenerator.xlsx',
+                'EllumilelPhpExcelWriter.xlsx',
                 $output
             );
         }
         if ($input->getOption("xlswriter") || $all) {
-            $this->runGenerator(new PhpXlsWriterGenerator($output), 'PhpXlsWriterGenerator.xlsx', $output);
+            $this->runGenerator(new PhpXlsWriterGenerator($output), 'PhpXlsWriter.xlsx', $output);
         }
         if ($input->getOption("peclxlswriter") || $all) {
-            $this->runGenerator(new PeclXlsWriterGenerator($output), 'PeclXlsWriterGenerator.xlsx', $output);
+            $this->runGenerator(new PeclXlsWriterGenerator($output), 'PeclXlsWriter.xlsx', $output);
         }
         if ($input->getOption("spreadsheet") || $all) {
-            $this->runGenerator(new PhpSpreadsheetGenerator($output), 'PhpSpreadsheetGenerator.xlsx', $output);
+            $this->runGenerator(new PhpSpreadsheetGenerator($output), 'PhpSpreadsheet.xlsx', $output);
+        }
+        if ($input->getOption("phpexcel") || $all) {
+            $this->runGenerator(new ScoumbourdisPhpExcelGenerator($output), 'PhpExcel.xlsx', $output);
         }
 
 
@@ -106,7 +113,7 @@ class ExcelRun extends Command
                 $name,
                 $value,
                 $this->rowsCount,
-                $this->cellRepeat
+                $this->cellRepeat * 6
             ]);
         }
 
