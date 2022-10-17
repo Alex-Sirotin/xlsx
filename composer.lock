@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b362ab46de5e987edb920513ab41ec28",
+    "content-hash": "b88a65b63f63cf63ae0cb633b5cd0c96",
     "packages": [
         {
             "name": "ellumilel/php-excel-writer",
@@ -120,75 +120,6 @@
                 "source": "https://github.com/FakerPHP/Faker/tree/v1.9.2"
             },
             "time": "2020-12-11T14:32:13+00:00"
-        },
-        {
-            "name": "macellan/phpexcel",
-            "version": "1.8.15",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/macellan/PHPExcel.git",
-                "reference": "a94305dc800c52856cd7e92c5caa263af96e659c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/macellan/PHPExcel/zipball/a94305dc800c52856cd7e92c5caa263af96e659c",
-                "reference": "a94305dc800c52856cd7e92c5caa263af96e659c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-xml": "*",
-                "ext-xmlwriter": "*",
-                "php": "^5.2|^7.0|^8.0"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PHPExcel": "Classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Maarten Balliauw",
-                    "homepage": "http://blog.maartenballiauw.be"
-                },
-                {
-                    "name": "Mark Baker",
-                    "homepage": "http://markbakeruk.net"
-                },
-                {
-                    "name": "Franck Lefevre",
-                    "homepage": "http://rootslabs.net"
-                },
-                {
-                    "name": "Erik Tilt"
-                },
-                {
-                    "name": "Fatih Aytekin",
-                    "homepage": "https://fatihaytekin.com/"
-                }
-            ],
-            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
-            "homepage": "https://github.com/macellan/PHPExcel",
-            "keywords": [
-                "OpenXML",
-                "excel",
-                "php",
-                "spreadsheet",
-                "xls",
-                "xlsx"
-            ],
-            "support": {
-                "source": "https://github.com/macellan/PHPExcel/tree/1.8.15"
-            },
-            "time": "2022-09-17T17:11:40+00:00"
         },
         {
             "name": "markbaker/complex",

@@ -50,16 +50,16 @@ class SimpleXlsxGenerator extends FileGenerator
 
     public function addDate()
     {
-        $this->row[] = $this->data->getDate();
+        $this->row[] = $this->data->getDateTime()->format('Y-m-d');
     }
 
     public function addTime()
     {
-        $this->row[] = $this->data->getTime();
+        $this->row[] = $this->data->getDateTime()->format('H:i:s');
     }
 
     public function addDateTime()
     {
-        $this->row[] = $this->data->getDateTime();
+        $this->row[] = $this->data->getDateTime()->format('Y-m-d H:i:s');
     }
 }

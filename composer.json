@@ -16,10 +16,8 @@
         "nimmneun/onesheet": "^1.2.3",
         "ellumilel/php-excel-writer": "^v0.1.9",
         "mk-j/php_xlsxwriter": "^0.38",
-
         "phpoffice/phpspreadsheet": "^1.8",
-        "scoumbourdis/phpexcel": "^1.9.6",
-        "macellan/phpexcel": "^1.8"
+        "scoumbourdis/phpexcel": "^1.9.6"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7.1"
