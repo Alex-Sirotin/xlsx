@@ -5,13 +5,12 @@ use ExcelCompare\FileGenerator;
 use ExcelCompare\Generators\SimpleXlsxGenerator;
 use ExcelCompare\Generators\OneSheetGenerator;
 use ExcelCompare\Generators\EllumilelPhpExcelWriterGenerator;
+use ExcelCompare\Generators\PhpXlsWriterGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
-use Symfony\Component\Console\Helper\TableSeparator;
 
 class ExcelRun extends Command
 {
@@ -35,6 +34,7 @@ class ExcelRun extends Command
                 InputOption::VALUE_NONE,
                 'Generate by ellumilel/php-excel-writer'
             )
+            ->addOption('xlswriter', 'x', InputOption::VALUE_NONE, 'Generate by mk-j/PHP_XLSXWriter')
             ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count');
         parent::configure();
     }
@@ -50,20 +50,20 @@ class ExcelRun extends Command
         $output->writeln('Generating...');
         $output->writeln('');
         if ($input->getOption("simplexlsgen") || $all) {
-            //$this->runSimpleXlsGen($output);
             $this->runGenerator(new SimpleXlsxGenerator($output), 'output/SimpleXlsxGen.xlsx', $output);
         }
         if ($input->getOption("onesheet") || $all) {
-            //$this->runOneSheet($output);
             $this->runGenerator(new OneSheetGenerator($output), 'output/OneSheet.xlsx', $output);
         }
         if ($input->getOption("ellumilelphpexcelwriter") || $all) {
-            //$this->runEllumilelPhpExcelWriter($output);
             $this->runGenerator(
                 new EllumilelPhpExcelWriterGenerator($output),
                 'output/EllumilelPhpExcelWriterGenerator.xlsx',
                 $output
             );
+        }
+        if ($input->getOption("xlswriter") || $all) {
+            $this->runGenerator(new PhpXlsWriterGenerator($output), 'output/PhpXlsWriterGenerator.xlsx', $output);
         }
         $this->printResult($output);
     }

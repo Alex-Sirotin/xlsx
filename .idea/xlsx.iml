@@ -18,11 +18,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/nimmneun/onesheet" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/scoumbourdis/phpexcel" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/imtigger/oneexcel" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/box/spout" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/shuchkin/simplexlsxgen" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mk-j/php_xlsxwriter" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

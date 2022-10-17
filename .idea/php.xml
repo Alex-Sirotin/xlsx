@@ -20,11 +20,10 @@
       <path value="$PROJECT_DIR$/vendor/nimmneun/onesheet" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/scoumbourdis/phpexcel" />
-      <path value="$PROJECT_DIR$/vendor/imtigger/oneexcel" />
-      <path value="$PROJECT_DIR$/vendor/box/spout" />
       <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
       <path value="$PROJECT_DIR$/vendor/psr/log" />
       <path value="$PROJECT_DIR$/vendor/shuchkin/simplexlsxgen" />
+      <path value="$PROJECT_DIR$/vendor/mk-j/php_xlsxwriter" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7">
