@@ -18,7 +18,7 @@ class ExcelData
         return $this->fake->text($length);
     }
 
-    public function getNumber(): string
+    public function getNumber(): int
     {
         return $this->fake->unique()->randomNumber();
     }

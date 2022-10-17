@@ -20,7 +20,7 @@ class SimpleXlsxGenerator extends FileGenerator
         $this->row = [];
     }
 
-    public function save(string $filename)
+    public function save(string $filename = null)
     {
         $this->generator->addSheet($this->rows, 'SimpleXLSXGen');
         $this->generator->saveAs($filename);

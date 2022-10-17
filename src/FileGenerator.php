@@ -11,11 +11,18 @@ abstract class FileGenerator
     protected $data;
     /** @var OutputInterface */
     private $output;
+    /** @var string */
+    protected $filename;
 
     public function __construct(OutputInterface $output)
     {
         $this->data = new ExcelData();
         $this->output = $output;
+    }
+
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
     }
 
     public function addRow(int $count = 1)
@@ -51,7 +58,7 @@ abstract class FileGenerator
         $progress->finish();
     }
 
-    abstract public function save(string $filename);
+    abstract public function save(string $filename = null);
     abstract public function addString();
     abstract public function addNumber();
     abstract public function addFloat();

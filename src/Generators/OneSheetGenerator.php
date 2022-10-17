@@ -18,7 +18,7 @@ class OneSheetGenerator extends FileGenerator
         $this->row = [];
     }
 
-    public function save(string $filename)
+    public function save(string $filename = null)
     {
         $this->generator->writeToFile($filename);
     }

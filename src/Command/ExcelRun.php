@@ -6,6 +6,7 @@ use ExcelCompare\Generators\SimpleXlsxGenerator;
 use ExcelCompare\Generators\OneSheetGenerator;
 use ExcelCompare\Generators\EllumilelPhpExcelWriterGenerator;
 use ExcelCompare\Generators\PhpXlsWriterGenerator;
+use ExcelCompare\Generators\PeclXlsWriterGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -38,6 +39,7 @@ class ExcelRun extends Command
                 'Generate by ellumilel/php-excel-writer'
             )
             ->addOption('xlswriter', 'x', InputOption::VALUE_NONE, 'Generate by mk-j/PHP_XLSXWriter')
+            ->addOption('peclxlswriter', 'p', InputOption::VALUE_NONE, 'Generate by Vtiful\Kernel\Excel')
             ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count')
             ->addOption('cellrepeat', 'c', InputOption::VALUE_REQUIRED, 'Repeat cell');
         parent::configure();
@@ -75,6 +77,10 @@ class ExcelRun extends Command
         if ($input->getOption("xlswriter") || $all) {
             $this->runGenerator(new PhpXlsWriterGenerator($output), 'PhpXlsWriterGenerator.xlsx', $output);
         }
+        if ($input->getOption("peclxlswriter") || $all) {
+            $this->runGenerator(new PeclXlsWriterGenerator($output), 'PeclXlsWriterGenerator.xlsx', $output);
+        }
+
         $this->printResult($output);
     }
 
@@ -104,8 +110,10 @@ class ExcelRun extends Command
     {
         $output->writeln($filename);
         $startTime = microtime(true);
+        $fullName = "{$this->uniqid}_{$this->timestamp}_{$this->rowsCount}_{$this->cellRepeat}_{$filename}";
+        $generator->setFilename($fullName);
         $generator->generate($this->rowsCount, $this->cellRepeat);
-        $generator->save("output/{$this->uniqid}_{$this->timestamp}_{$this->rowsCount}_{$this->cellRepeat}_{$filename}");
+        $generator->save($fullName);
         $this->times[$filename] = microtime(true) - $startTime;
         $output->writeln('');
         $output->writeln('');

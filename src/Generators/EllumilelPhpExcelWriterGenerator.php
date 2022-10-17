@@ -21,7 +21,7 @@ class EllumilelPhpExcelWriterGenerator extends FileGenerator
         $this->headers = [];
     }
 
-    public function save(string $filename)
+    public function save(string $filename = null)
     {
         $this->generator->writeToFile($filename);
     }
