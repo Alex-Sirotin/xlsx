@@ -57,14 +57,14 @@ class EllumilelPhpExcelWriterGenerator extends FileGenerator
 
     public function addDate()
     {
-        $this->row[] = $this->data->getDate();
+        $this->row[] = $this->data->getDateTime()->format('c');
         $this->headers[] = 'DD.MM.YYYY';
     }
 
     public function addTime()
     {
-        $this->row[] = $this->data->getTime();
-        $this->headers[] = 'string';
+        $this->row[] = $this->data->getDateTime()->format('c');
+        $this->headers[] = 'HH::MM:SS';
     }
 
     public function addDateTime()
