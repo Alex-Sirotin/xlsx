@@ -10,20 +10,17 @@
         }
     },
     "require": {
-        "shuchkin/simplexlsxgen": "^1.2.16",
-        "scoumbourdis/phpexcel": "^1.9.6",
-        "nimmneun/onesheet": "^1.2.3",
-        "ellumilel/php-excel-writer": "^v0.1.9",
         "fakerphp/faker": "^1.9",
         "symfony/console": "^3.4",
+        "shuchkin/simplexlsxgen": "^1.2.16",
+        "nimmneun/onesheet": "^1.2.3",
+        "ellumilel/php-excel-writer": "^v0.1.9",
+
         "phpoffice/phpspreadsheet": "^1.8",
-        "box/spout": "^2.7",
-        "imtigger/oneexcel": "^0.7.3",
-        "macellan/phpexcel": "^1.8",
-        "monolog/monolog": "^1.27"
+        "scoumbourdis/phpexcel": "^1.9.6",
+        "macellan/phpexcel": "^1.8"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.7.1",
-        "phpunit/phpunit": "^6.5"
+        "squizlabs/php_codesniffer": "^3.7.1"
     }
 }

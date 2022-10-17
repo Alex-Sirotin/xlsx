@@ -465,4 +465,5 @@ composer.lock
 *.sass.map
 *.scss.map
 
-.output/
+output/
+.idea/
