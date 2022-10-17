@@ -15,7 +15,10 @@ use Symfony\Component\Console\Helper\Table;
 class ExcelRun extends Command
 {
     private $rowsCount = 1000;
+    private $cellRepeat = 1;
     private $times = [];
+    private $timestamp;
+    private $uniqid;
 
     protected function configure()
     {
@@ -35,7 +38,8 @@ class ExcelRun extends Command
                 'Generate by ellumilel/php-excel-writer'
             )
             ->addOption('xlswriter', 'x', InputOption::VALUE_NONE, 'Generate by mk-j/PHP_XLSXWriter')
-            ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count');
+            ->addOption('rows', 'r', InputOption::VALUE_REQUIRED, 'Rows count')
+            ->addOption('cellrepeat', 'c', InputOption::VALUE_REQUIRED, 'Repeat cell');
         parent::configure();
     }
 
@@ -45,25 +49,31 @@ class ExcelRun extends Command
         if (is_numeric($rows) && $rows > 0) {
             $this->rowsCount = $rows;
         }
+        $repeats = (int)$input->getOption('cellrepeat');
+        if (is_numeric($repeats) && $repeats > 0) {
+            $this->cellRepeat = $repeats;
+        }
         $all = $input->getOption('all');
 
         $output->writeln('Generating...');
         $output->writeln('');
+        $this->timestamp = time();
+        $this->uniqid = uniqid();
         if ($input->getOption("simplexlsgen") || $all) {
-            $this->runGenerator(new SimpleXlsxGenerator($output), 'output/SimpleXlsxGen.xlsx', $output);
+            $this->runGenerator(new SimpleXlsxGenerator($output), 'SimpleXlsxGen.xlsx', $output);
         }
         if ($input->getOption("onesheet") || $all) {
-            $this->runGenerator(new OneSheetGenerator($output), 'output/OneSheet.xlsx', $output);
+            $this->runGenerator(new OneSheetGenerator($output), 'OneSheet.xlsx', $output);
         }
         if ($input->getOption("ellumilelphpexcelwriter") || $all) {
             $this->runGenerator(
                 new EllumilelPhpExcelWriterGenerator($output),
-                'output/EllumilelPhpExcelWriterGenerator.xlsx',
+                'EllumilelPhpExcelWriterGenerator.xlsx',
                 $output
             );
         }
         if ($input->getOption("xlswriter") || $all) {
-            $this->runGenerator(new PhpXlsWriterGenerator($output), 'output/PhpXlsWriterGenerator.xlsx', $output);
+            $this->runGenerator(new PhpXlsWriterGenerator($output), 'PhpXlsWriterGenerator.xlsx', $output);
         }
         $this->printResult($output);
     }
@@ -94,8 +104,8 @@ class ExcelRun extends Command
     {
         $output->writeln($filename);
         $startTime = microtime(true);
-        $generator->generate($this->rowsCount);
-        $generator->save($filename);
+        $generator->generate($this->rowsCount, $this->cellRepeat);
+        $generator->save("output/{$this->uniqid}_{$this->timestamp}_{$this->rowsCount}_{$this->cellRepeat}_{$filename}");
         $this->times[$filename] = microtime(true) - $startTime;
         $output->writeln('');
         $output->writeln('');
